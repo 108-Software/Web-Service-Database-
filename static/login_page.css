@@ -1,0 +1,207 @@
+
+@font-face {
+    font-family: Poppins-Regular;
+    src: url('../static/point/Poppins-Bold.ttf') format("opentype");
+}
+
+@font-face {
+    font-family: Poppins-Thin;
+    src: url('../static/point/Poppins-Thin.ttf') format("opentype");
+}
+
+@font-face {
+    font-family: Montserrat-Bold;
+    src: url('../static/point/Montserrat-Bold.ttf') format("opentype");
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.backside{
+    position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+
+    background: linear-gradient(to right, blue, 45%, purple);
+}
+
+.login_window{
+    position: relative;
+    
+    top: 100px;
+    width: 100%;
+
+    vertical-align: middle;
+    margin-left: 25%;
+
+    width: 950px;
+    height: 700px;
+
+    border-radius: 10px;
+    background-color: white ;
+
+}
+
+body{
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.text-member{
+    position: relative;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    top: 200px;
+    margin-left: 42%;
+
+    font-family: 'Poppins-Regular';
+    font-size: 1.5em;
+    font-weight: 700;
+    
+}
+
+.inputBox{
+    position: relative;
+
+    margin-left: 55%;
+    margin-bottom: 6px;
+    top: 35%;
+
+    width: 300px;
+    height: 50px;
+}
+
+.inputBox input{
+    width: 100%;
+    padding: 10px;
+    text-indent: 10px;
+
+    margin-top: 82%;
+    
+    font-size: 1em;
+    font-weight: 700;
+    font-family: "Poppins-Thin";
+
+    background-color: rgb(231, 229, 229);
+    border: 1px solid white;
+    border-radius: 50px;
+
+    transition: 500ms;
+    outline: none;
+}
+
+.inputBox span{
+    position: absolute;
+
+    margin-top: 82%;
+    left: 20px;
+    padding: 12px;
+    pointer-events: none;
+    
+    font-size: 1em;
+    font-weight: 700;
+    font-family: "Poppins-Thin";
+
+    transition: 500ms;
+}
+
+.inputBox input:valid ~ span,
+.inputBox input:focus ~ span{
+
+    transform: translateX(10px) translateY(-10px);
+
+    font-size: 0.9em;
+    padding: 0 10px;
+
+    color: white;
+    border-left: 1px solid blue;
+    border-right: 1px solid blue;
+    background-color: blue;
+    letter-spacing: 0.1em;
+}
+
+.inputBox input:valid,
+.inputBox input:focus{
+    transition: 500ms;
+    border: 1px solid blue;
+    box-shadow:0 0 2px 2px blue;
+    
+}
+
+.inputBox:nth-child(2) input:valid ~ span,
+.inputBox:nth-child(2) input:focus ~ span,
+.inputBox:nth-child(1) input:valid ~ span,
+.inputBox:nth-child(1) input:focus ~ span{
+    background: blue;
+    border-radius: 5px;
+}
+
+.pass-icon{
+    position: relative;
+    display: flex;
+	
+    margin-top: 21.35%;
+    margin-left: 82%;
+
+    width: 32px;
+    height: 32px;
+
+    transition: 500ms;
+}
+
+.log-in{
+    position: relative;
+
+    margin-left: 55%;
+    margin-top: 4%;
+
+    width: 300px;
+    height: 50px;
+
+    text-align: center;
+    font-size: 1em;
+    font-family: 'Montserrat-Bold';
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+
+    border-radius: 50px;
+    transition: 500ms;
+
+    color: white;
+    border: 1px solid white;
+    background: blue;
+
+}
+
+.log-in:hover{
+    background: black;
+    color: blue;
+}
+
+.user{
+    position: relative;
+    display: flex;
+
+    margin-top: -25%;
+    margin-left: 13%;
+
+    width: 256px;
+    height: 256px;
+
+    transition: 500ms;
+
+}
+
+.user:hover{
+    filter: drop-shadow(3px 3px 7px blue);
+}

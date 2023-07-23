@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login</title>
+
+        <link rel="icon" type="image/x-icon" href="../static/images/favicon.ico">
+        <link rel="stylesheet" href="../static/login_page.css">
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <div class="backside"></div>
+        <div class="login_window">
+            <form id="myForm">
+                <h1 class="text-member">Member login</h1> 
+                <div class="inputBox">
+                    <input type="text" id="form-login" required="required">
+                    <span>Username</span>
+                </div>
+                <div class="inputBox">
+                    <input type="password" id="form-pass" required="required">
+                    <span>Password</span>
+                </div>
+                <img class="pass-icon" id="pass-icon" src="../static/images/show_password.ico" style="opacity: 0;">
+                <input type="button" class="log-in" onclick="submitForm()" value="Login">
+                <img class="user" src="../static/images/user.png">
+            </form>
+        </div>
+        <script>
+            const inputPass = document.getElementById('form-pass');
+            const iconPass = document.getElementById('pass-icon');
+            const loginBar = document.getElementById('form-login');
+            const inputBar = document.getElementById('form-pass');
+
+            inputBar.addEventListener('click', () => {
+                document.getElementById("pass-icon").style.opacity = "1";
+            });
+
+            iconPass.addEventListener('mousemove', () => {
+                document.getElementById("pass-icon").style.opacity = "1";
+            });
+
+            iconPass.addEventListener('mouseout', () => {
+                document.getElementById("pass-icon").style.opacity = "0";
+            });
+
+            inputBar.addEventListener('blur', () => {
+                document.getElementById("pass-icon").style.opacity = "0";
+            });
+
+            iconPass.addEventListener('click', () => {
+                if (inputPass.getAttribute('type') === "password"){
+                    inputPass.setAttribute('type', 'text');
+                    iconPass.setAttribute('src', '../static/images/hide_password.ico')
+                } else {
+                    inputPass.setAttribute('type', 'password')
+                    iconPass.setAttribute('src', '../static/images/show_password.ico')
+                }
+            });
+
+            function submitForm() {
+                var formData = {
+                    password: inputBar.value,
+                    username: loginBar.value
+                };
+
+                fetch("/login", {
+                    method: "POST",
+                    headers: {
+                    "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    // Делайте что-то с ответом сервера, если необходимо
+                })
+                .catch(error => {
+                    console.error("Ошибка при отправке POST-запроса:", error);
+                });
+            }
+
+        </script>
+    </body>
+</html>
