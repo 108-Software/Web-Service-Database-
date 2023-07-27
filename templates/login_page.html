@@ -4,7 +4,7 @@
         <title>Login</title>
 
         <link rel="icon" type="image/x-icon" href="../static/images/favicon.ico">
-        <link rel="stylesheet" href="../static/login_page.css">
+        <link rel="stylesheet" href="../static/css/login_page.css">
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,62 +26,9 @@
                 <input type="button" class="log-in" onclick="submitForm()" value="Login">
                 <img class="user" src="../static/images/user.png">
             </form>
+            <span class="wrong-data" id="wrong-data" style="opacity: 0;">Wrong password / login</span>
+            <input type="button" class="create" value="Create your Account →" onclick="request_Create()">
         </div>
-        <script>
-            const inputPass = document.getElementById('form-pass');
-            const iconPass = document.getElementById('pass-icon');
-            const loginBar = document.getElementById('form-login');
-            const inputBar = document.getElementById('form-pass');
-
-            inputBar.addEventListener('click', () => {
-                document.getElementById("pass-icon").style.opacity = "1";
-            });
-
-            iconPass.addEventListener('mousemove', () => {
-                document.getElementById("pass-icon").style.opacity = "1";
-            });
-
-            iconPass.addEventListener('mouseout', () => {
-                document.getElementById("pass-icon").style.opacity = "0";
-            });
-
-            inputBar.addEventListener('blur', () => {
-                document.getElementById("pass-icon").style.opacity = "0";
-            });
-
-            iconPass.addEventListener('click', () => {
-                if (inputPass.getAttribute('type') === "password"){
-                    inputPass.setAttribute('type', 'text');
-                    iconPass.setAttribute('src', '../static/images/hide_password.ico')
-                } else {
-                    inputPass.setAttribute('type', 'password')
-                    iconPass.setAttribute('src', '../static/images/show_password.ico')
-                }
-            });
-
-            function submitForm() {
-                var formData = {
-                    password: inputBar.value,
-                    username: loginBar.value
-                };
-
-                fetch("/login", {
-                    method: "POST",
-                    headers: {
-                    "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(formData)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    // Делайте что-то с ответом сервера, если необходимо
-                })
-                .catch(error => {
-                    console.error("Ошибка при отправке POST-запроса:", error);
-                });
-            }
-
-        </script>
+        <script src="../static/scripts-pages/login-script.js"></script>
     </body>
 </html>
