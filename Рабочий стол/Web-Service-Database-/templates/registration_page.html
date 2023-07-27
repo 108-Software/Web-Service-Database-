@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Registration</title>
+
+        <link rel="icon" type="image/x-icon" href="../static/images/registration-icon.ico">
+        <link rel="stylesheet" href="../static/css/registration_page.css">
+
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <div class="background"></div>
+        <div class="login-form">
+            <form id="form">
+                <h1 class="text-member">New member</h1> 
+                <div class="inputBox">
+                    <input type="text" id="form-login" required="required">
+                    <span>Username</span>
+                </div>
+                <div class="inputBox">
+                    <input type="password" id="form-pass" required="required">
+                    <span>Password</span>
+                </div>
+                <img class="pass-icon" id="pass-icon" src="../static/images/show_password.ico" style="opacity: 0;">
+                <input type="button" class="log-in" onclick="registration()" value="register">
+            </form>
+            <img class="user" src="../static/images/new_user.png">
+            <span class="wrong-data" id="new_user_status" style="opacity: 0;">Account created successfully</span>
+        </div>
+        <script src="../static/scripts-pages/registration.js"></script>
+    </body>
+    </html>        
