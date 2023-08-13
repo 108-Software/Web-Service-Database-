@@ -4,13 +4,21 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"os"
 	"strconv"
 	"strings"
 
 	_ "github.com/lib/pq"
 )
 
-type request struct {
+type Request struct {
+	Name        string
+	Addres      string
+	Age         int
+	Nymberphone string
+}
+
+type people struct {
 	name        string
 	addres      string
 	age         int
@@ -34,9 +42,22 @@ func Search_account_map(login_data map[string]interface{}) (result bool) {
 	var login Usersdata
 	login.username = login_data["username"].(string)
 	login.password = login_data["password"].(string)
-	//fmt.Println(login)
 
 	result = search_account(login)
+
+	file, _ := os.OpenFile("./templates/log.txt", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
+
+	var logg string
+
+	if result == true {
+		logg = fmt.Sprintf("Successful login attempt || Username: %s \n", login.username)
+		file.WriteString(logg)
+	} else {
+		logg = fmt.Sprintf("Unsuccessful login attempt || Username: %s || Password: %s  \n", login.username, login.password)
+		file.WriteString(logg)
+	}
+
+	defer file.Close()
 
 	return result
 }
@@ -93,11 +114,19 @@ func Create_new_users(login_data map[string]interface{}) (result bool) { //Но�
 
 	defer db.Close()
 
+	file, _ := os.OpenFile("./templates/log.txt", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
+
+	var logg string
+
 	_, err = db.Exec("insert into users (username, password) VALUES ($1, $2)", login.username, login.password)
 	if err != nil {
-		log.Fatal(err)
+		logg = fmt.Sprintf("Unsuccessful attempt to create an account")
+		file.WriteString(logg)
 		result = false
 	} else {
+
+		logg = fmt.Sprintf("Successful attempt to create an account || Username: %s \n", login.username)
+		file.WriteString(logg)
 		result = true
 	}
 
@@ -105,7 +134,8 @@ func Create_new_users(login_data map[string]interface{}) (result bool) { //Но�
 
 }
 
-func insert_Struct_database_for_users(User request) { //Новая запись в базу данных для ВЫВОДА НА САЙТЕ
+func Send_data_web() (peoples []Request) { //получаем и отправляем данные из базы данных на страницу
+
 	db, err := sql.Open("postgres", "postgres://postgres:108@localhost/peoples?sslmode=disable")
 	if err != nil {
 		log.Fatal(err)
@@ -113,7 +143,36 @@ func insert_Struct_database_for_users(User request) { //Новая запись 
 
 	defer db.Close()
 
-	_, err = db.Exec("insert into peoples (name, addres, age, numberphone) VALUES ($1, $2, $3, $4)", User.name, User.addres, User.age, User.nymberphone)
+	rows, err := db.Query("select * from peoples")
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+	//peoples := []request{}
+
+	for rows.Next() {
+		p := Request{}
+		err := rows.Scan(&p.Name, &p.Addres, &p.Age, &p.Nymberphone)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		peoples = append(peoples, p)
+	}
+
+	return peoples
+
+}
+
+func insert_Struct_database_for_users(User Request) { //Новая запись в базу данных для ВЫВОДА НА САЙТЕ
+	db, err := sql.Open("postgres", "postgres://postgres:108@localhost/peoples?sslmode=disable")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer db.Close()
+
+	_, err = db.Exec("insert into peoples (name, addres, age, numberphone) VALUES ($1, $2, $3, $4)", User.Name, User.Addres, User.Age, User.Nymberphone)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -135,11 +194,11 @@ func print() { //Вывод в консоль базу данных
 		panic(err)
 	}
 	defer rows.Close()
-	peoples := []request{}
+	peoples := []Request{}
 
 	for rows.Next() {
-		p := request{}
-		err := rows.Scan(&p.name, &p.addres, &p.age, &p.nymberphone)
+		p := Request{}
+		err := rows.Scan(&p.Name, &p.Addres, &p.Age, &p.Nymberphone)
 		if err != nil {
 			fmt.Println(err)
 			continue
@@ -150,17 +209,17 @@ func print() { //Вывод в консоль базу данных
 	max := maxlens{}
 
 	for _, p := range peoples {
-		if max.maxlen_name < len(p.name) {
-			max.maxlen_name = len(p.name)
+		if max.maxlen_name < len(p.Name) {
+			max.maxlen_name = len(p.Name)
 		}
-		if max.maxlen_addres < len(p.addres) {
-			max.maxlen_addres = len(p.addres)
+		if max.maxlen_addres < len(p.Addres) {
+			max.maxlen_addres = len(p.Addres)
 		}
-		if max.maxlen_age < len(strconv.Itoa(p.age)) {
-			max.maxlen_age = len(strconv.Itoa(p.age))
+		if max.maxlen_age < len(strconv.Itoa(p.Age)) {
+			max.maxlen_age = len(strconv.Itoa(p.Age))
 		}
-		if max.maxlen_number < len(p.nymberphone) {
-			max.maxlen_number = len(p.nymberphone)
+		if max.maxlen_number < len(p.Nymberphone) {
+			max.maxlen_number = len(p.Nymberphone)
 		}
 	}
 
@@ -170,10 +229,10 @@ func print() { //Вывод в консоль базу данных
 	format_line("Phone", max.maxlen_number)
 	fmt.Println()
 	for _, p := range peoples {
-		format_line(p.name, max.maxlen_name)
-		format_line(p.addres, max.maxlen_addres)
-		format_line(strconv.Itoa(p.age), max.maxlen_age)
-		format_line(p.nymberphone, max.maxlen_number)
+		format_line(p.Name, max.maxlen_name)
+		format_line(p.Addres, max.maxlen_addres)
+		format_line(strconv.Itoa(p.Age), max.maxlen_age)
+		format_line(p.Nymberphone, max.maxlen_number)
 		fmt.Println()
 	}
 

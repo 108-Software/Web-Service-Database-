@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Database</title>
+
+        <link rel="icon" type="image/x-icon" href="../static/images/database_icon.ico">
+        <link rel="stylesheet" href="../static/css/main_page.css">
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+<body>
+    <div class="backside">
+        <div class="main_back">
+            <table class="table_data">
+                <tr>
+                    <th class="actions-header"></th>
+                    <th class="title_name">Name</th>
+                    <th class="title">Address</th>
+                    <th class="title">Age</th>
+                    <th class="title">NumberPhone</th>
+                </tr>
+                {{range .people}}
+                <tr>
+                    <td class="actions1"><button class="but"><img class="pensil" src="../static/images/edit.ico"></td>
+                    <td class="name">{{.Name}}</td>
+                    <td class="addres">{{.Addres}}</td>
+                    <td class="age">{{.Age}}</td>
+                    <td class="number">{{.Nymberphone}}</td>
+                    <td class="actions"><button class="but"><img class="cancel" src="../static/images/cancel.ico"></button></td>
+                </tr>
+                {{end}}
+            </table>
+            <button class="plus"><img class="add" src="../static/images/plus.ico"></button>
+            <button class="search"><img class="add" src="../static/images/search.ico"></button>
+        </div>    
+    </div>    
+</body>
+</html>

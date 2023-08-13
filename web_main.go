@@ -46,7 +46,11 @@ func main() {
 	})
 
 	r.GET("/mainpage", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "mainpage.html", nil)
+		r.LoadHTMLFiles("./templates/mainpage.html")
+		data := database.Send_data_web()
+		c.HTML(http.StatusOK, "mainpage.html", gin.H{
+			"people": data,
+		})
 	})
 
 	r.GET("/registration", func(c *gin.Context) {

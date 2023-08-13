@@ -1,0 +1,6 @@
+Successful login attempt || Username: Flisthdo 
+Successful login attempt || Username: DimZag2002 
+Unsuccessful  login attempt || Username: Jopa || Password: alo  
+Successful attempt to create an account || Username: Flisthdo 
+Successful login attempt || Username: Flisthdo 
+Unsuccessful login attempt || Username: Flisthdo || Password: rebebe  
