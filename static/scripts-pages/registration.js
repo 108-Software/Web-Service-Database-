@@ -30,8 +30,6 @@ iconPass.addEventListener('click', () => {
 
 function registration() {
 
-    document.getElementById("new_user_status").style.opacity = "0";
-
     var formData = {
         password: inputPass.value,
         username: loginBar.value
@@ -47,12 +45,15 @@ function registration() {
     .then(response => response.json())
     .then(data => {
         console.log(data);
-        // Делайте что-то с ответом сервера, если необходимо
         if (data.redirect_url) {
             document.getElementById("new_user_status").style.opacity = 1;
+            setTimeout(3000)
             window.location.href = data.redirect_url;
+            
         } else {
-            // Делайте что-то с другими данными, если необходимо
+            document.getElementById("new_user_status").textContent = "An account with this username already exists";
+            document.getElementById("new_user_status").style.color = "red";
+            document.getElementById("new_user_status").style.marginLeft = "51%";
             document.getElementById("new_user_status").style.opacity = 1;
 
             inputPass.value=null

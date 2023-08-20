@@ -22,18 +22,19 @@
                 </tr>
                 {{range .people}}
                 <tr>
-                    <td class="actions1"><button class="but"><img class="pensil" src="../static/images/edit.ico"></td>
-                    <td class="name">{{.Name}}</td>
-                    <td class="addres">{{.Addres}}</td>
-                    <td class="age">{{.Age}}</td>
-                    <td class="number">{{.Nymberphone}}</td>
-                    <td class="actions"><button class="but"><img class="cancel" src="../static/images/cancel.ico"></button></td>
+                    <td class="actions1"><button class="but" data-editing="false" onclick="edit(this)"><img class="pensil" src="../static/images/edit.ico"></button></td>
+                    <td class="name" type="text">{{.Name}}</td>
+                    <td class="addres" type="text">{{.Addres}}</td>
+                    <td class="age" type="text">{{.Age}}</td>
+                    <td class="number" type="text">{{.Nymberphone}}</td>
+                    <td class="actions2"><button class="but2"><img class="cancel" src="../static/images/cancel.ico"></button></td>
                 </tr>
                 {{end}}
             </table>
             <button class="plus"><img class="add" src="../static/images/plus.ico"></button>
             <button class="search"><img class="add" src="../static/images/search.ico"></button>
         </div>    
-    </div>    
+    </div>
+    <script src="../static/scripts-pages/mainpage.js"></script>    
 </body>
 </html>

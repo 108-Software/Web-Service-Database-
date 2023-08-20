@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"example.com/m/database"
@@ -70,9 +71,22 @@ func main() {
 
 		if status == true {
 			c.JSON(http.StatusOK, gin.H{"redirect_url": "/login"})
-		} else {
+		} else if status == false {
 			c.JSON(http.StatusOK, gin.H{"bad_data": "wrong data"})
 		}
+
+	})
+
+	r.POST("/edit", func(c *gin.Context) {
+
+		var edit database.Edit_data
+		if err := c.BindJSON(&edit); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		fmt.Println(edit)
+		//database.Edit_cells(edit)
 
 	})
 

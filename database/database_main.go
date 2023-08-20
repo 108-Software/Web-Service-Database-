@@ -25,6 +25,13 @@ type people struct {
 	nymberphone string
 }
 
+type Edit_data struct {
+	Name        string `json:"name"`
+	Addres      string `json:"addres"`
+	Age         string `json:"age"`
+	NumberPhone string `json:"numberphone"`
+}
+
 type maxlens struct {
 	maxlen_name   int
 	maxlen_addres int
@@ -108,8 +115,37 @@ func Create_new_users(login_data map[string]interface{}) (result bool) { //Но�
 
 	db, err := sql.Open("postgres", "postgres://admin:108@localhost/user-account?sslmode=disable")
 	if err != nil {
-		log.Fatal(err)
 		result = false
+	}
+
+	rows, err := db.Query("select * from users")
+	if err != nil {
+		panic(err)
+	}
+
+	defer rows.Close()
+
+	sec := []Usersdata{}
+
+	for rows.Next() {
+		pas := Usersdata{}
+		err := rows.Scan(&pas.username, &pas.password)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		sec = append(sec, pas)
+	}
+
+	for _, user := range sec {
+
+		if user.username == login.username {
+			result = false
+			return
+		} else {
+			continue
+		}
+
 	}
 
 	defer db.Close()
@@ -148,7 +184,6 @@ func Send_data_web() (peoples []Request) { //получаем и отправл�
 		panic(err)
 	}
 	defer rows.Close()
-	//peoples := []request{}
 
 	for rows.Next() {
 		p := Request{}
@@ -164,7 +199,7 @@ func Send_data_web() (peoples []Request) { //получаем и отправл�
 
 }
 
-func insert_Struct_database_for_users(User Request) { //Новая запись в базу данных для ВЫВОДА НА САЙТЕ
+func insert_Struct_database_for_users(User Request) { //Новая запись в базу данных для ВЫВОДА НА САЙТЕ (ЕШЁ НЕ ИСПОЛЬЗОВАННО)
 	db, err := sql.Open("postgres", "postgres://postgres:108@localhost/peoples?sslmode=disable")
 	if err != nil {
 		log.Fatal(err)
@@ -178,6 +213,10 @@ func insert_Struct_database_for_users(User Request) { //Новая запись 
 	}
 
 	fmt.Println("Запись успешна")
+}
+
+func Edit_cells(data Edit_data) {
+	fmt.Println(data)
 }
 
 func print() { //Вывод в консоль базу данных
