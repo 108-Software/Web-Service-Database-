@@ -29,7 +29,7 @@ type Edit_data struct {
 	Name        string `json:"name"`
 	Addres      string `json:"addres"`
 	Age         string `json:"age"`
-	NumberPhone string `json:"numberphone"`
+	NumberPhone string `json:"number"`
 }
 
 type maxlens struct {
@@ -197,6 +197,32 @@ func Send_data_web() (peoples []Request) { //получаем и отправл�
 
 	return peoples
 
+}
+
+func Change_data(originalData Edit_data, editedData Edit_data) (result bool) {
+	db, err := sql.Open("postgres", "postgres://postgres:108@localhost/peoples?sslmode=disable")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer db.Close()
+
+	originalAge, _ := strconv.Atoi(originalData.Age)
+	editedAge, _ := strconv.Atoi(editedData.Age)
+
+	_, err = db.Exec(`
+    	UPDATE peoples
+    	SET Name = $1, Addres = $2, Age = $3, NumberPhone = $4
+    	WHERE (Name, Addres, Age, NumberPhone) = ($5, $6, $7, $8)`,
+		editedData.Name, editedData.Addres, editedAge, editedData.NumberPhone,
+		originalData.Name, originalData.Addres, originalAge, originalData.NumberPhone,
+	)
+	if err != nil {
+		fmt.Println("Error updating record:", err)
+		return false
+	}
+
+	return true
 }
 
 func insert_Struct_database_for_users(User Request) { //Новая запись в базу данных для ВЫВОДА НА САЙТЕ (ЕШЁ НЕ ИСПОЛЬЗОВАННО)

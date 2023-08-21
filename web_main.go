@@ -79,14 +79,21 @@ func main() {
 
 	r.POST("/edit", func(c *gin.Context) {
 
-		var edit database.Edit_data
-		if err := c.BindJSON(&edit); err != nil {
+		var RequestData struct {
+			OriginalData database.Edit_data
+			EditedData   database.Edit_data
+		}
+
+		if err := c.BindJSON(&RequestData); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
 
-		fmt.Println(edit)
-		//database.Edit_cells(edit)
+		status := database.Change_data(RequestData.OriginalData, RequestData.EditedData)
+
+		if status == true {
+			fmt.Println()
+		}
 
 	})
 

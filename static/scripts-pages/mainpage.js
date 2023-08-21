@@ -106,8 +106,10 @@ function edit_data(cells, data) {
         }
     });
 
-    console.log(rowData);
-    console.log(data);
+    const combinedData = {
+        originalData: data,
+        editedData: rowData
+    };
 
     // Отправляем POST-запрос
     fetch('/edit', {
@@ -115,18 +117,7 @@ function edit_data(cells, data) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(rowData)
+        body: JSON.stringify(combinedData)
     })
-    .then(response => {
-        console.log(); // Выводите объект ответа в консоль
-        return response.json();
-    })
-    .then(data => {
-        console.log();
-        // Дополнительные действия после получения ответа от сервера
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        // Обработка ошибок
-    });
+    
 }
