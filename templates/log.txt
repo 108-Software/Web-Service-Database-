@@ -10,3 +10,6 @@ Unsuccessful login attempt || Username: Flisthdo || Password: ewfewfw
 Successful attempt to create an account || Username: Diza 
 Successful login attempt || Username: Diza 
 Successful login attempt || Username: Flisthdo 
+Unsuccessful login attempt || Username: Flisthdo || Password: Flisthdo108  
+Successful login attempt || Username: Flisthdo 
+Successful login attempt || Username: Flisthdo 

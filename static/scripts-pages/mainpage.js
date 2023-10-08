@@ -121,3 +121,38 @@ function edit_data(cells, data) {
     })
     
 }
+
+function new_note(){
+    var form = document.querySelector(".add-form");
+    var overlay = document.querySelector(".overlay");
+    overlay.style.display = "block";
+    form.style.display = "block";
+}
+
+// Функция, чтобы скрыть форму
+function hideForm() {
+    var form = document.querySelector(".add-form");
+    var overlay = document.querySelector(".overlay");
+    
+    form.style.display = "none";
+    overlay.style.display = "none";
+}
+
+function validateForm() {
+    var nameInput = document.querySelector(".add-form input[name='name']");
+    var addressInput = document.querySelector(".add-form input[name='address']");
+    var ageInput = document.querySelector(".add-form input[name='age']");
+    var numberphoneInput = document.querySelector(".add-form input[name='numberphone']");
+    
+    if (nameInput.value.trim() === "" || 
+        addressInput.value.trim() === "" || 
+        ageInput.value.trim() === "" || 
+        numberphoneInput.value.trim() === "") {
+        
+        alert("Please fill in all fields"); // Вывести предупреждение
+        return false; // Остановить отправку формы
+    }
+    
+    // Если все поля заполнены, продолжить отправку формы
+    return true;
+}

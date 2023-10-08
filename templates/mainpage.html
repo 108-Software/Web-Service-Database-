@@ -31,10 +31,31 @@
                 </tr>
                 {{end}}
             </table>
-            <button class="plus"><img class="add" src="../static/images/plus.ico"></button>
+            <button class="plus"><img class="add" src="../static/images/plus.ico" onclick="new_note()"></button>
             <button class="search"><img class="add" src="../static/images/search.ico"></button>
+
+            <div class="overlay" style="display: none;"></div>
+
+            <form class="add-form" style="display: none;">
+                <div class="inputBox">
+                    <input type="text" required="required" name="name"><span>Name</span>
+                </div>
+                <div class="inputBox">
+                    <input type="text" required="required" name="address"><span>Address</span>
+                </div>
+                <div class="inputBox">    
+                    <input type="text" required="required" name="age"><span>Age</span>
+                </div>
+                <div class="inputBox">    
+                    <input type="text" required="required" name="numberphone"><span>Numberphone</span>
+                </div>  
+                <button class="send" type="submit" onclick="return validateForm()">Save</button>
+                <button class="cancel"><img src="../static/images/cancel.ico" onclick="hideForm()">
+            </form>
+            
         </div>    
     </div>
-    <script src="../static/scripts-pages/mainpage.js"></script>    
+    <script src="../static/scripts-pages/mainpage.js"></script> 
+    
 </body>
 </html>
